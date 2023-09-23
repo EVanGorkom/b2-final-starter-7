@@ -5,5 +5,4 @@ class Discount < ApplicationRecord
 
   belongs_to :merchant
   has_many :items, through: :merchant
-  # add test for validations and relationships
 end
