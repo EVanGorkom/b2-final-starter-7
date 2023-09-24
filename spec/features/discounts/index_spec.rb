@@ -69,13 +69,21 @@ RSpec.describe "merchant dashboard" do
     end
   end
 
-  describe "Create new link" do
-    it "should have a link to create a new discount" do
+  describe "Create new discount" do
+    it "Should link to a new page where I see a form to add a new bulk discount" do
       expect(page).to have_link("Create a new Discount")
 
       click_link("Create a new Discount")
 
       expect(current_path).to eq("/merchants/#{@merchant1.id}/discounts/new")
     end
+
+    # it "The form can be filled with valid data" do
+
+    # end
+
+    # xit "Redirects back to the bulk discount index And I see my new discount listed" do
+
+    # end
   end
 end
