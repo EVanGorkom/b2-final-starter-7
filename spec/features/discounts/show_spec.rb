@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Discount New Page" do
+RSpec.describe "Discount Show Page" do
   before :each do
     @merchant1 = Merchant.create!(name: "Hair Care")
 
@@ -44,37 +44,13 @@ RSpec.describe "Discount New Page" do
     @discount2 = Discount.create!(threshold: 10, percentage: 15, merchant_id: @merchant1.id)
     @discount3 = Discount.create!(threshold: 15, percentage: 120, merchant_id: @merchant1.id)
 
-    visit new_merchant_discount_path(@merchant1)
+    visit merchant_discount_path(@merchant1, @discount1)
   end
 
-  describe "Create new discount" do
-    it "Has a form to create a new discount" do
-      expect(page).to have_content("Item Quantity to Qualify:")
-      expect(page).to have_content("Percentage Off Order:")
-      expect(page).to have_button("Submit")
-    end
-
-    it "The form can be filled with valid data" do 
-      fill_in "Item Quantity to Qualify:", with: "25"
-      fill_in "Percentage Off Order:", with: ""
-      click_button "Submit"
-      expect(current_path).to eq(new_merchant_discount_path(@merchant1))
-      expect(page).to have_content("The Discount was not created. Please enter a number value for both the Percentage Off and Quantity to Qualify attributes.")
-
-      fill_in "Item Quantity to Qualify:", with: 10
-      fill_in "Percentage Off Order:", with: 10
-      click_button "Submit"
-      expect(current_path).to eq(merchant_discounts_path(@merchant1))
-      expect(page).to have_content("Discount Created!")
-    end
-
-    it "Redirects back to the bulk discount index And I see my new discount listed" do
-      fill_in "Item Quantity to Qualify:", with: 10
-      fill_in "Percentage Off Order:", with: 10
-      click_button "Submit"
-
-      expect(current_path).to eq(merchant_discounts_path(@merchant1))
-      expect(page).to have_content("Gives %10.0 off, after purchasing 10 items.")
+  describe "When I visit a specific discount show page" do
+    it "Then I see the discount's details" do
+      expect(page).to have_content("Item Quantity to Qualify: 5")
+      expect(page).to have_content("Percentage Off Order: 10")
     end
   end
 end

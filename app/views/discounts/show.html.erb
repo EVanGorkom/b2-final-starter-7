@@ -1,0 +1,12 @@
+<%= render partial: "shared/nav" %>
+
+<body>
+  <div class="row">
+    <p class='col-12'> Discount #<%= @discount.id %> Details</p>
+  </div>
+
+  <div class="discount-details">
+    <p>Item Quantity to Qualify: <%= @discount.threshold %></p>
+    <p>Percentage Off Order: <%= @discount.percentage %></p>
+  </div>
+</body>
