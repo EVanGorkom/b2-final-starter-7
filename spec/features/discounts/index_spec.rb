@@ -102,4 +102,25 @@ RSpec.describe "merchant dashboard" do
       expect(page).to have_content("Gives %10.0 off, after purchasing 10 items.")
     end
   end
+
+  describe "Delete button," do
+    it "Next to each discount item there should be a button to delete it" do
+      within("##{@discount1.id}") do
+        expect(page).to have_button("Delete")
+      end
+    end
+
+    it "When the button is clicked, the page should redirect back to the index page and the discount that was deleted should not be there" do
+      within("##{@discount1.id}") do
+        expect(page).to have_button("Delete")
+        click_button "Delete"
+        expect(current_path).to eq(merchant_discounts_path(@merchant1))
+      end
+      
+      within("div.discounts") do
+        expect(page).to_not have_content(@discount1.id)
+      end
+    end
+
+  end
 end
