@@ -68,4 +68,14 @@ RSpec.describe "merchant dashboard" do
       end
     end
   end
+
+  describe "Create new link" do
+    it "should have a link to create a new discount" do
+      expect(page).to have_link("Create a new Discount")
+
+      click_link("Create a new Discount")
+
+      expect(current_path).to eq("/merchants/#{@merchant1.id}/discounts/new")
+    end
+  end
 end
