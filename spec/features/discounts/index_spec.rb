@@ -49,7 +49,6 @@ RSpec.describe "merchant dashboard" do
 
   describe "Each Discount" do
     it "Should have a link to each discount's show page" do
-      save_and_open_page
       within("div.discounts") do
         expect(page).to have_link("Discount ##{@discount1.id}")
         expect(page).to have_link("Discount ##{@discount2.id}")
@@ -78,12 +77,29 @@ RSpec.describe "merchant dashboard" do
       expect(current_path).to eq("/merchants/#{@merchant1.id}/discounts/new")
     end
 
-    # it "The form can be filled with valid data" do
+    it "The form can be filled with valid data" do
+      click_link("Create a new Discount")
 
-    # end
+      fill_in "Item Quantity to Qualify:", with: 30
+      fill_in "Percentage Off Order:", with: ""
+      click_button "Submit"
+      expect(current_path).to eq(new_merchant_discount_path(@merchant1))
 
-    # xit "Redirects back to the bulk discount index And I see my new discount listed" do
+      fill_in "Item Quantity to Qualify:", with: 10
+      fill_in "Percentage Off Order:", with: 10
+      click_button "Submit"
+      expect(current_path).to eq(merchant_discounts_path(@merchant1))
+    end
 
-    # end
+    it "Redirects back to the bulk discount index And I see my new discount listed" do
+      click_link("Create a new Discount")
+
+      fill_in "Item Quantity to Qualify:", with: 10
+      fill_in "Percentage Off Order:", with: 10
+      click_button "Submit"
+
+      expect(current_path).to eq(merchant_discounts_path(@merchant1))
+      expect(page).to have_content("Gives %10.0 off, after purchasing 10 items.")
+    end
   end
 end
