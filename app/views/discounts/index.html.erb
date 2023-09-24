@@ -10,8 +10,11 @@
   <div class="discounts">
     <% @discounts.each do |discount| %>
       <p>
-        <%= link_to "Discount ##{discount.id}", merchant_discount_path(merchant_id: @merchant.id, id: discount.id) %>
-        <%= " - Gives %#{discount.percentage} off, after purchasing #{discount.threshold} items." %>
+        <div id=<%= discount.id %>>
+          <%= link_to "Discount ##{discount.id}", merchant_discount_path(merchant_id: @merchant.id, id: discount.id) %>
+          <%= " - Gives %#{discount.percentage} off, after purchasing #{discount.threshold} items." %>
+          <%= button_to "Delete", merchant_discount_path(@merchant.id, discount.id), data: {turbo: false }, method: :delete %>
+        </div><br>
       </p>
     <% end %>
   </div>
