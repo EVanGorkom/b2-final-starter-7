@@ -1,0 +1,3 @@
+<%= render partial: "shared/nav" %>
+
+<%= render partial: 'form', locals: { method: :post, url: merchant_discounts_path(@merchant, @item), class: 'merchant_discounts_form', local: true, model: nil } %>

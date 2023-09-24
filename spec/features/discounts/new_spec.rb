@@ -44,56 +44,31 @@ RSpec.describe "merchant dashboard" do
     @discount2 = Discount.create!(threshold: 10, percentage: 15, merchant_id: @merchant1.id)
     @discount3 = Discount.create!(threshold: 15, percentage: 120, merchant_id: @merchant1.id)
 
-    visit merchant_discounts_path(@merchant1)
-  end
-
-  describe "Each Discount" do
-    it "Should have a link to each discount's show page" do
-      within("div.discounts") do
-        expect(page).to have_link("Discount ##{@discount1.id}")
-        expect(page).to have_link("Discount ##{@discount2.id}")
-        expect(page).to have_link("Discount ##{@discount3.id}")
-      end
-    end
-
-    it "Should have the precentage and threshold for each discount listed" do
-      within("div.discounts") do
-        expect(page).to have_content("Gives %#{@discount1.percentage} off")
-        expect(page).to have_content("after purchasing #{@discount1.threshold} items.")
-        expect(page).to have_content("Gives %#{@discount2.percentage} off")
-        expect(page).to have_content("after purchasing #{@discount2.threshold} items.")
-        expect(page).to have_content("Gives %#{@discount3.percentage} off")
-        expect(page).to have_content("after purchasing #{@discount3.threshold} items.")
-      end
-    end
+    visit new_merchant_discount_path(@merchant1)
   end
 
   describe "Create new discount" do
-    it "Should link to a new page where I see a form to add a new bulk discount" do
-      expect(page).to have_link("Create a new Discount")
-
-      click_link("Create a new Discount")
-
-      expect(current_path).to eq("/merchants/#{@merchant1.id}/discounts/new")
+    it "Has a form to create a new discount" do
+      expect(page).to have_content("Item Quantity to Qualify:")
+      expect(page).to have_content("Percentage Off Order:")
+      expect(page).to have_button("Submit")
     end
 
-    it "The form can be filled with valid data" do
-      click_link("Create a new Discount")
-
-      fill_in "Item Quantity to Qualify:", with: 30
+    it "The form can be filled with valid data" do 
+      fill_in "Item Quantity to Qualify:", with: "25"
       fill_in "Percentage Off Order:", with: ""
       click_button "Submit"
       expect(current_path).to eq(new_merchant_discount_path(@merchant1))
+      expect(page).to have_content("The Discount was not created. Please enter a number value for both the Percentage Off and Quantity to Qualify attributes.")
 
       fill_in "Item Quantity to Qualify:", with: 10
       fill_in "Percentage Off Order:", with: 10
       click_button "Submit"
       expect(current_path).to eq(merchant_discounts_path(@merchant1))
+      expect(page).to have_content("Discount Created!")
     end
 
     it "Redirects back to the bulk discount index And I see my new discount listed" do
-      click_link("Create a new Discount")
-
       fill_in "Item Quantity to Qualify:", with: 10
       fill_in "Percentage Off Order:", with: 10
       click_button "Submit"

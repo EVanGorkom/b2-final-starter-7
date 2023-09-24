@@ -1,8 +1,7 @@
-```
 ## DescriptionPlease include a description of what was changed
 
 
-## Type of change- 
+## Type of change
 - [ ] fix  
 - [ ] feat  
 - [ ] test  
@@ -16,4 +15,3 @@
 - [ ] all tests pass
 
 ### Thanks!
-```

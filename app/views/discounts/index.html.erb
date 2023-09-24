@@ -5,6 +5,8 @@
     <p class='col-12'>My Discounts</p>
   </div>
 
+  <p><%= link_to "Create a new Discount", new_merchant_discount_path(@merchant) %></p>
+
   <div class="discounts">
     <% @discounts.each do |discount| %>
       <p>
