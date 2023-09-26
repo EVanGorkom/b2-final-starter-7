@@ -9,4 +9,8 @@
     <p>Item Quantity to Qualify: <%= @discount.threshold %></p>
     <p>Percentage Off Order: <%= @discount.percentage %></p>
   </div>
+
+  <div class="edit-form">
+    <%= link_to "Edit", edit_merchant_discount_path(@merchant, @discount) %>
+  </div>
 </body>
