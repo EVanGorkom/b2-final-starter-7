@@ -31,4 +31,11 @@ class DiscountsController < ApplicationController
     @merchant = Merchant.find(params[:merchant_id])
     @discount = @merchant.discounts.find(params[:id])
   end
+
+  def edit
+    @merchant = Merchant.find(params[:merchant_id])
+    @discount = @merchant.discounts.find(params[:id])
+    
+    # maybe add flash messages here in case of malicious user
+  end
 end
