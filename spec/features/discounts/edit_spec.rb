@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Discount Show Page" do
+RSpec.describe "Discount Edit Page" do
   before :each do
     @merchant1 = Merchant.create!(name: "Hair Care")
 
@@ -44,21 +44,11 @@ RSpec.describe "Discount Show Page" do
     @discount2 = Discount.create!(threshold: 10, percentage: 15, merchant_id: @merchant1.id)
     @discount3 = Discount.create!(threshold: 15, percentage: 120, merchant_id: @merchant1.id)
 
-    visit merchant_discount_path(@merchant1, @discount1)
+    visit edit_merchant_discount_path(@merchant1, @discount1)
   end
 
-  describe "When I visit a specific discount show page" do
-    it "Then I see the discount's details" do
-      expect(page).to have_content("Item Quantity to Qualify: 5")
-      expect(page).to have_content("Percentage Off Order: 10")
-    end
-
-    it "Then I see a link to edit the bulk discount" do
-      expect(page).to have_link("Edit")
-    end
-
-    it "When I click 'Edit', Then I am taken to a new page with a form to edit the discount" do
-      click_on "Edit"
+  describe "When I visit a specific discount edit page" do
+    it "Then I am taken to a page with a form to edit the discount" do
       expect(current_path).to eq(edit_merchant_discount_path(@merchant1, @discount1))
 
       expect(page).to have_content("Item Quantity to Qualify:")
@@ -66,15 +56,12 @@ RSpec.describe "Discount Show Page" do
       expect(page).to have_button("Submit")
     end
 
-    it "I see that the discounts current attributes are pre-poluated in the form" do
-      click_on "Edit"
-
+    it "I see that the discounts current attributes to be pre-poluated in the form" do
       expect(page).to have_field("Item Quantity to Qualify:", with: "#{@discount1.threshold}")
       expect(page).to have_field("Percentage Off Order:", with: "#{@discount1.percentage}")
     end
 
     it "When I change any/all of the information and click 'Submit', Then I am redirected to the discount's show page," do
-      click_on "Edit"
       fill_in "Item Quantity to Qualify:", with: 7
       fill_in "Percentage Off Order:", with: 14
       
@@ -83,7 +70,6 @@ RSpec.describe "Discount Show Page" do
     end
     
     it "When I change any/all of the information and click 'Submit', I see that the discount's attributes have been updated" do
-      click_on "Edit"
       fill_in "Item Quantity to Qualify:", with: 7
       fill_in "Percentage Off Order:", with: 14
       click_on "Submit"
