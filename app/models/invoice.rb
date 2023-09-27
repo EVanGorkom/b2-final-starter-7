@@ -21,10 +21,4 @@ class Invoice < ApplicationRecord
       .group('invoice_items.id')
       .sum(&:total_discounted_revenue)
   end
-
-  # def apply_discount
-  #   invoice_item.each do |invoice|
-      
-  #   end
-  # end
 end
