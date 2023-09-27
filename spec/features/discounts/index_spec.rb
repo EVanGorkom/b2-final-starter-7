@@ -121,6 +121,5 @@ RSpec.describe "Discount Index Page" do
         expect(page).to_not have_content(@discount1.id)
       end
     end
-
   end
 end
