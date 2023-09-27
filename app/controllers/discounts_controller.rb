@@ -35,7 +35,21 @@ class DiscountsController < ApplicationController
   def edit
     @merchant = Merchant.find(params[:merchant_id])
     @discount = @merchant.discounts.find(params[:id])
-    
-    # maybe add flash messages here in case of malicious user
+  end
+
+  def update
+    @merchant = Merchant.find(params[:merchant_id])
+    discount = @merchant.discounts.find(params[:id])
+    if discount.update(discount_params)
+      redirect_to merchant_discount_path(@merchant, discount)
+    else
+      redirect_to edit_merchant_discount_path(@merchant, discount)
+    end
+  end
+
+  private
+
+  def discount_params
+    params.permit(:percentage, :threshold)
   end
 end
