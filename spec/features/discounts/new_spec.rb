@@ -74,7 +74,7 @@ RSpec.describe "Discount New Page" do
       click_button "Submit"
 
       expect(current_path).to eq(merchant_discounts_path(@merchant1))
-      expect(page).to have_content("Gives %10.0 off, after purchasing 10 items.")
+      expect(page).to have_content("Gives %#{@discount1.percentage} off, after purchasing #{@discount1.threshold} items.")
     end
   end
 end

@@ -99,7 +99,7 @@ RSpec.describe "Discount Index Page" do
       click_button "Submit"
 
       expect(current_path).to eq(merchant_discounts_path(@merchant1))
-      expect(page).to have_content("Gives %10.0 off, after purchasing 10 items.")
+      expect(page).to have_content("Gives %#{@discount1.percentage} off, after purchasing #{@discount1.threshold} items.")
     end
   end
 
@@ -121,6 +121,5 @@ RSpec.describe "Discount Index Page" do
         expect(page).to_not have_content(@discount1.id)
       end
     end
-
   end
 end
