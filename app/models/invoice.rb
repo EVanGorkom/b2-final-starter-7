@@ -21,4 +21,13 @@ class Invoice < ApplicationRecord
       .group('invoice_items.id')
       .sum(&:total_discounted_revenue)
   end
+
+  def discounted_invoice
+    InvoiceItem.select("invoice_items.id, discounts.id")
+      .joins(item: {merchant: :discounts})
+      .having(
+        "SUM(invoice_items.unit_price * invoice_items.quantity) != SUM(invoice_items.quantity * invoice_items.unit_price) * (1 - (MAX(discounts.percentage) / 100.0))"
+      )
+      .group("invoice_items.id, discounts.id")
+  end
 end
